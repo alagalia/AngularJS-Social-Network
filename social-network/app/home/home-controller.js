@@ -15,11 +15,14 @@ angular.module('socialNetwork.home', [
     .controller('HomeCtrl', [
         '$scope',
         'authentication',
-        function ($scope, authentication) {
+        '$location',
+        function ($scope, authentication, $location) {
             $scope.login = function(user){
                 authentication.loginUser(user)
-                    .then(function(loginUser){
-                        console.log(loginUser)
+                    .then(function(loggedInUser){
+                        $scope.token = loggedInUser.access_token;
+                        console.log( $scope.token);
+                        $location.path('/newsFeed');
                     });
             };
 
@@ -31,6 +34,8 @@ angular.module('socialNetwork.home', [
             };
 
             $scope.logOut = function(){
+                console.log("Logged out");
                 authentication.logOut();
             }
+
         }]);

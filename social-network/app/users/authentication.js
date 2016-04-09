@@ -32,7 +32,16 @@ angular.module('socialNetwork.users.authentication', [])
         }
 
         function logOut(){
+            var deferred = $q.defer();
 
+            $http.post(BASE_URL + 'users/Logout')
+                .then(function(response){
+                    deferred.resolve(response.data)
+                }, function(err){
+                    deferred.reject(err)
+                });
+
+            return deferred.promise;
         }
 
 
